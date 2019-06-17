@@ -33,6 +33,7 @@ function mousePressed() {
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
+
 const randoColor = () => Math.floor(Math.random() * 255) + 1;
 const backgroundColor = [
   randoColor(),
@@ -86,13 +87,6 @@ class Ball {
         this.others[i].vy += ay;
       }
     }
-
-    // const clampRGB = [
-    //   Math.floor(Math.random() * 255) + 1,
-    //   Math.floor(Math.random() * 255) + 1,
-    //   Math.floor(Math.random() * 255) + 1,
-    // ];
-    // fill(...clampRGB);
   }
 
   move() {
@@ -119,10 +113,3 @@ class Ball {
     ellipse(this.x, this.y, this.diameter, this.diameter);
   }
 }
-
-class Partical {
-  constructor() {
-  }
-}
-
-console.log(new Partical());
