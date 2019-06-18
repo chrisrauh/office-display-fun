@@ -19,6 +19,7 @@ function setup() {
   }
   noStroke();
   fill(255, 204);
+  ready.go();
 }
 
 function mousePressed() {
