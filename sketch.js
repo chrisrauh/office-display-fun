@@ -7,13 +7,14 @@ let balls = [];
 function setup() {
   var cnv = createCanvas(windowWidth - 100, windowHeight - 100);
   cnv.style('display', 'block');
+  blendMode(OVERLAY);
   for (let i = 0; i < numBalls; i++) {
     balls[i] = new Ball(
-      random(width),
-      random(height),
-      random(30, 70),
-      i,
-      balls,
+        random(width),
+        random(height),
+        random(30, 70),
+        i,
+        balls,
     );
   }
   noStroke();
@@ -55,7 +56,9 @@ function draw() {
     ball.move();
     ball.display();
     fill(...ballColor());
+    ball.diameter -= .1;
   });
+
 }
 
 class Ball {
