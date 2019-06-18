@@ -1,4 +1,3 @@
-
 let numBalls = 13;
 let spring = 0.05;
 let gravity = 0.03;
@@ -6,7 +5,7 @@ let friction = -0.9;
 let balls = [];
 
 function setup() {
-  var cnv = createCanvas(windowWidth-100, windowHeight-100);
+  var cnv = createCanvas(windowWidth - 100, windowHeight - 100);
   cnv.style('display', 'block');
   for (let i = 0; i < numBalls; i++) {
     balls[i] = new Ball(
@@ -14,7 +13,7 @@ function setup() {
       random(height),
       random(30, 70),
       i,
-      balls
+      balls,
     );
   }
   noStroke();
@@ -35,12 +34,27 @@ function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
 
+const randoColor = () => Math.floor(Math.random() * 255) + 1;
+const backgroundColor = [
+  randoColor(),
+  randoColor(),
+  randoColor(),
+  Math.max(.1, Math.random())
+];
+const ballColor = () =>  [
+  randoColor(),
+  randoColor(),
+  randoColor(),
+];
+
+
 function draw() {
-  background(0);
+  background(...backgroundColor);
   balls.forEach(ball => {
     ball.collide();
     ball.move();
     ball.display();
+    fill(...ballColor());
   });
 }
 
@@ -57,15 +71,11 @@ class Ball {
 
   collide() {
     for (let i = this.id + 1; i < numBalls; i++) {
-      // console.log(others[i]);
       let dx = this.others[i].x - this.x;
       let dy = this.others[i].y - this.y;
       let distance = sqrt(dx * dx + dy * dy);
       let minDist = this.others[i].diameter / 2 + this.diameter / 2;
-      //   console.log(distance);
-      //console.log(minDist);
       if (distance < minDist) {
-        //console.log("2");
         let angle = atan2(dy, dx);
         let targetX = this.x + cos(angle) * minDist;
         let targetY = this.y + sin(angle) * minDist;
