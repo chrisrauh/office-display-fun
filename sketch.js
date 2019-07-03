@@ -1,11 +1,11 @@
 
 let numBalls = 16;
 let spring = 0.05;
-let gravity = 0.1;
-let friction = -0.1;
+let gravity = 0.01;
+let friction = -0.9;
 let balls = [];
 
-let borderSize = 15;
+let borderSize = 5;
 
 let pallete = [[45, 44, 45], [91, 84, 81], [164, 126, 111], [237, 206, 181], [217, 168, 123]];
 let palleteLoaded = false;
@@ -70,10 +70,6 @@ function windowResized() {
 const randoColor = () => pallete[Math.floor(Math.random() * (pallete.length - 1)) + 1];
 
 function draw() {
-  textSize(60);
-  textAlign(CENTER);
-  text('Remember James loves you!', width/2, height/2);
-  fill(0,0,0);
   if (palleteLoaded) {
     balls.forEach(ball => {
       ball.collide();
