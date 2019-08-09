@@ -64,7 +64,7 @@ function mousePressed() {
 }
 
 function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
+  resizeCanvas(windowWidth - 100, windowHeight - 100);
 }
 
 const randoColor = () => pallete[Math.floor(Math.random() * (pallete.length - 1)) + 1];
