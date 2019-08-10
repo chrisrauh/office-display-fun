@@ -10,7 +10,7 @@ html, body {
 
 body {
   align-items: center;
-  border: 200px solid #F5F5F5;
+  border: 50px solid #F5F5F5;
   display: flex;
   margin: 0;
   justify-content: center;
@@ -26,13 +26,13 @@ canvas {
   animation: float 12s cubic-bezier(0.22, 0.61, 0.36, 1) 0s infinite;
   display: flex;
   font-size: 32px;
-  height: 200px;
+  height: 150px;
   justify-content: center;
   left: 0px;
   position: fixed;
   transform: translate(-0%, 0%);
   top: 0%;
-  width: 200px;
+  width: 100px;
 }
 
 @keyframes float {

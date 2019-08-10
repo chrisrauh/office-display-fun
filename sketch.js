@@ -1,16 +1,20 @@
 
-let numBalls = 16;
-let spring = 0.05;
-let gravity = 0.1;
-let friction = -0.1;
+let numBalls = 20;
+let spring = 0.2;
+let gravity = 0.02;
+let friction = -.95;
 let balls = [];
 
-let borderSize = 15;
+let borderSize = 50;
 
 let pallete = [[45, 44, 45], [91, 84, 81], [164, 126, 111], [237, 206, 181], [217, 168, 123]];
 let palleteLoaded = false;
 
 function setup() {
+
+  var cnv = createCanvas(windowWidth - borderSize*2, windowHeight - borderSize*2);
+  cnv.style('display', 'block');
+  noStroke();
 
   var url = "http://colormind.io/api/";
   var data = {
@@ -34,8 +38,8 @@ function setup() {
 
 function setupAfterLoad() {
 
-  var cnv = createCanvas(windowWidth - 100, windowHeight - 100);
-  cnv.style('display', 'block');
+  background(...pallete[0]);
+
   for (let i = 0; i < numBalls; i++) {
     colorIndex = i%(pallete.length-1)+1
     balls[i] = new Ball(
@@ -48,38 +52,45 @@ function setupAfterLoad() {
     );
   }
 
-  noStroke();
-  background(...pallete[0]);
-
-}
-
-function mousePressed() {
-
-  // Set the value of fullscreen
-  // into the variable
-  let fs = fullscreen();
-
-  // Call to fullscreen function
-  fullscreen(!fs);
 }
 
 function windowResized() {
-  resizeCanvas(windowWidth - 100, windowHeight - 100);
+  resizeCanvas(windowWidth - borderSize*2, windowHeight - borderSize*2);
 }
 
 const randoColor = () => pallete[Math.floor(Math.random() * (pallete.length - 1)) + 1];
 
 function draw() {
-  textSize(60);
-  textAlign(CENTER);
-  text('Remember James loves you!', width/2, height/2);
-  fill(0,0,0);
+
+
+
   if (palleteLoaded) {
+
+    var pg = createGraphics(width,height);
+    pg.background(...pallete[0]);
+    pg.noStroke();
+
     balls.forEach(ball => {
       ball.collide();
       ball.move();
-      ball.display();
+      ball.display(pg);
     });
+
+    image(pg,0,0);
+
+    var pg1 = createGraphics(width, height/2);
+    pg1.background(0,200,0);
+    pg1.angleMode(DEGREES);
+    pg1.translate(0,height/2);
+    pg1.scale(1, -1);
+    pg1.copy(pg,0,height/2,width,height/2,0,0,width,height/2);
+
+    image(pg1,0,0);
+
+    fill(...pallete[4],80);
+    textSize(60);
+    textAlign(CENTER);
+    text('Remember James loves you!', width/2, height/2);
   }
 
 }
@@ -88,8 +99,8 @@ class Ball {
   constructor(xin, yin, din, idin, oin, color) {
     this.x = xin;
     this.y = yin;
-    this.vx = 3;
-    this.vy = -0.1;
+    this.vx = random(3)-1;
+    this.vy = -0;
     this.diameter = din;
     this.id = idin;
     this.others = oin;
@@ -136,8 +147,18 @@ class Ball {
     }
   }
 
-  display() {
-    fill(this.color);
-    ellipse(this.x, this.y, this.diameter, this.diameter);
+  display(img) {
+    img.fill(this.color);
+    img.ellipse(this.x, this.y, this.diameter, this.diameter);
   }
 }
+
+// function mousePressed() {
+
+//   // Set the value of fullscreen
+//   // into the variable
+//   let fs = fullscreen();
+
+//   // Call to fullscreen function
+//   fullscreen(!fs);
+// }
