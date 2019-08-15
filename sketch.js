@@ -10,11 +10,20 @@ let borderSize = 50;
 let pallete = [[45, 44, 45], [91, 84, 81], [164, 126, 111], [237, 206, 181], [217, 168, 123]];
 let palleteLoaded = false;
 
+let cnv;
+let pg0;
+let pg1;
+
 function setup() {
 
   var cnv = createCanvas(windowWidth - borderSize*2, windowHeight - borderSize*2);
   cnv.style('display', 'block');
   noStroke();
+
+  pg0 = createGraphics(width,height);
+  pg0.noStroke();
+
+  pg1 = createGraphics(width, height/2);
 
   var url = "http://colormind.io/api/";
   var data = {
@@ -39,6 +48,9 @@ function setup() {
 function setupAfterLoad() {
 
   background(...pallete[0]);
+  pg0.background(...pallete[0]);
+  pg1.background(...pallete[0]);
+
 
   for (let i = 0; i < numBalls; i++) {
     colorIndex = i%(pallete.length-1)+1
@@ -62,29 +74,23 @@ const randoColor = () => pallete[Math.floor(Math.random() * (pallete.length - 1)
 
 function draw() {
 
-
-
   if (palleteLoaded) {
 
-    var pg = createGraphics(width,height);
-    pg.background(...pallete[0]);
-    pg.noStroke();
+    pg0.background(...pallete[0]);
+    pg1.background(...pallete[0]);
 
     balls.forEach(ball => {
       ball.collide();
       ball.move();
-      ball.display(pg);
+      ball.display(pg0);
     });
 
-    image(pg,0,0);
-
-    var pg1 = createGraphics(width, height/2);
-    pg1.background(0,200,0);
     pg1.angleMode(DEGREES);
     pg1.translate(0,height/2);
     pg1.scale(1, -1);
-    pg1.copy(pg,0,height/2,width,height/2,0,0,width,height/2);
+    pg1.copy(pg0,0,height/2,width,height/2,0,0,width,height/2);
 
+    image(pg0,0,0);
     image(pg1,0,0);
 
     fill(...pallete[4],80);
