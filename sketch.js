@@ -23,7 +23,10 @@ function setup() {
   pg0 = createGraphics(width,height);
   pg0.noStroke();
 
-  pg1 = createGraphics(width, height/2);
+  pg1 = createGraphics(width, height / 2);
+  pg1.noStroke();
+  pg1.translate(0,height/2);
+  pg1.scale(1,-1);
 
   var url = "http://colormind.io/api/";
   var data = {
@@ -51,7 +54,6 @@ function setupAfterLoad() {
   pg0.background(...pallete[0]);
   pg1.background(...pallete[0]);
 
-
   for (let i = 0; i < numBalls; i++) {
     colorIndex = i%(pallete.length-1)+1
     balls[i] = new Ball(
@@ -76,6 +78,7 @@ function draw() {
 
   if (palleteLoaded) {
 
+    //background(...pallete[0])
     pg0.background(...pallete[0]);
     pg1.background(...pallete[0]);
 
@@ -85,9 +88,6 @@ function draw() {
       ball.display(pg0);
     });
 
-    pg1.angleMode(DEGREES);
-    pg1.translate(0,height/2);
-    pg1.scale(1, -1);
     pg1.copy(pg0,0,height/2,width,height/2,0,0,width,height/2);
 
     image(pg0,0,0);
