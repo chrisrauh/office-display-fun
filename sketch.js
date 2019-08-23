@@ -1,7 +1,7 @@
 
 let numBalls = 20;
 let spring = 0.2;
-let gravity = 0.02;
+let gravity = 0.005;
 let friction = -.95;
 let balls = [];
 
@@ -105,8 +105,8 @@ class Ball {
   constructor(xin, yin, din, idin, oin, color) {
     this.x = xin;
     this.y = yin;
-    this.vx = random(3)-1;
-    this.vy = -0;
+    this.vx = random(4)-2;
+    this.vy = 0;
     this.diameter = din;
     this.id = idin;
     this.others = oin;
