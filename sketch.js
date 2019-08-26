@@ -1,7 +1,7 @@
 
-let numBalls = 20;
-let spring = 0.2;
-let gravity = 0.005;
+let numBalls = 16;
+let spring = 0.1;
+let gravity = 0.001;
 let friction = -.95;
 let balls = [];
 
@@ -13,6 +13,14 @@ let palleteLoaded = false;
 let cnv;
 let pg0;
 let pg1;
+let img = [];
+
+function preload() {
+  for (let i = 0; i < 7; i++) {
+    img[i] = loadImage(`img/face_${i}.png`);
+    console.log(`img/face_${i}.png`);
+  }
+}
 
 function setup() {
 
@@ -26,12 +34,14 @@ function setup() {
   pg1 = createGraphics(width, height / 2);
   pg1.noStroke();
   pg1.translate(0,height/2);
-  pg1.scale(1,-1);
+  pg1.scale(1, -1);
 
   var url = "http://colormind.io/api/";
   var data = {
     model : "default"
   }
+
+  setupAfterLoad();
 
   fetch(url, {
     method: 'POST', // or 'PUT'
@@ -59,10 +69,11 @@ function setupAfterLoad() {
     balls[i] = new Ball(
       random(width),
       random(height),
-      random(10, 60),
+      150,
       i,
       balls,
       pallete[colorIndex],
+      img[i%6+1]
     );
   }
 
@@ -76,7 +87,7 @@ const randoColor = () => pallete[Math.floor(Math.random() * (pallete.length - 1)
 
 function draw() {
 
-  if (palleteLoaded) {
+  //if (palleteLoaded) {
 
     //background(...pallete[0])
     pg0.background(...pallete[0]);
@@ -88,21 +99,21 @@ function draw() {
       ball.display(pg0);
     });
 
-    pg1.copy(pg0,0,height/2,width,height/2,0,0,width,height/2);
+    pg1.copy(pg0,0,Math.floor(height/2),width,Math.floor(height/2),0,0,Math.floor(width),Math.floor(height/2));
 
     image(pg0,0,0);
-    image(pg1,0,0);
+    image(pg1, 0, 0);
 
-    fill(...pallete[4],80);
-    textSize(60);
-    textAlign(CENTER);
-    text('Remember James loves you!', width/2, height/2);
-  }
+    // fill(...pallete[4],80);
+    // textSize(60);
+    // textAlign(CENTER);
+    // text('Remember James loves you!', width/2, height/2);
+  //}
 
 }
 
 class Ball {
-  constructor(xin, yin, din, idin, oin, color) {
+  constructor(xin, yin, din, idin, oin, color, picture) {
     this.x = xin;
     this.y = yin;
     this.vx = random(4)-2;
@@ -111,6 +122,10 @@ class Ball {
     this.id = idin;
     this.others = oin;
     this.color = color;
+    this.picture = picture;
+    this.vRotation = random(0.1) - 0.05;
+    console.log(this.vRotation);
+    this.img = createGraphics(150,150);
   }
 
   collide() {
@@ -154,8 +169,14 @@ class Ball {
   }
 
   display(img) {
-    img.fill(this.color);
-    img.ellipse(this.x, this.y, this.diameter, this.diameter);
+    // img.fill(this.color);
+    // img.ellipse(this.x, this.y, this.diameter, this.diameter);
+    this.img.background(0,0,0,0);
+    this.img.image(this.picture, 0, 0, 150, 150);
+    this.img.translate(Math.floor(150/2), Math.floor(150/2))
+    this.img.rotate(this.vRotation);
+    this.img.translate(-Math.floor(150/2), -Math.floor(150/2))
+    img.image(this.img, this.x , this.y);
   }
 }
 
