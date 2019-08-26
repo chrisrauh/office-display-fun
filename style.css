@@ -21,6 +21,7 @@ canvas {
   background-color: #FFFFFF;
 }
 
+/*
 #magic-wizard {
   align-items: center;
   animation: float 12s cubic-bezier(0.22, 0.61, 0.36, 1) 0s infinite;
@@ -56,4 +57,4 @@ canvas {
     top: 0;
     transform: translate(-0%, 0%);
   }
-}
+} */
