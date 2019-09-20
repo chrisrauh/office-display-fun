@@ -1,5 +1,5 @@
 
-let numBalls = 16;
+let numBalls = 24;
 let spring = 0.1;
 let gravity = 0.001;
 let friction = -.95;
@@ -16,7 +16,7 @@ let pg1;
 let img = [];
 
 function preload() {
-  for (let i = 0; i < 7; i++) {
+  for (let i = 0; i < 1; i++) {
     img[i] = loadImage(`img/face_${i}.png`);
     console.log(`img/face_${i}.png`);
   }
@@ -69,11 +69,11 @@ function setupAfterLoad() {
     balls[i] = new Ball(
       random(width),
       random(height),
-      150,
+      random(30) + 50,
       i,
       balls,
       pallete[colorIndex],
-      img[i%6+1]
+      img[0]
     );
   }
 
@@ -125,7 +125,8 @@ class Ball {
     this.picture = picture;
     this.vRotation = random(0.1) - 0.05;
     console.log(this.vRotation);
-    this.img = createGraphics(150,150);
+    this.img = createGraphics(150, 150);
+    this.showImg = random();
   }
 
   collide() {
@@ -169,15 +170,19 @@ class Ball {
   }
 
   display(img) {
-    // img.fill(this.color);
-    // img.ellipse(this.x, this.y, this.diameter, this.diameter);
-    this.img.background(0,0,0,0);
-    this.img.image(this.picture, 0, 0, 150, 150);
-    this.img.translate(Math.floor(150/2), Math.floor(150/2))
-    this.img.rotate(this.vRotation);
-    this.img.translate(-Math.floor(150/2), -Math.floor(150/2))
-    img.image(this.img, this.x , this.y);
+    if (this.showImg < 0.01) {
+      this.img.background(0, 0, 0, 0);
+      this.img.image(this.picture, 0, 0, 150, 150);
+      this.img.translate(Math.floor(150 / 2), Math.floor(150 / 2))
+      this.img.rotate(this.vRotation);
+      this.img.translate(-Math.floor(150 / 2), -Math.floor(150 / 2))
+      img.image(this.img, this.x, this.y);
+    } else {
+      img.fill(this.color);
+      img.ellipse(this.x, this.y, this.diameter, this.diameter);
+    }
   }
+
 }
 
 // function mousePressed() {
