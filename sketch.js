@@ -187,7 +187,6 @@ class Ball {
   }
 
   changeColor() {
-    console.log("changing color")
     if (this.canChangeColor) {
       this.color = pallete[Math.floor(Math.random() * 4) + 1];
       this.canChangeColor = false;
