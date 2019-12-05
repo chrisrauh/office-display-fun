@@ -127,6 +127,7 @@ class Ball {
     console.log(this.vRotation);
     this.img = createGraphics(150, 150);
     this.showImg = random();
+    this.canChangeColor = true;
   }
 
   collide() {
@@ -145,6 +146,8 @@ class Ball {
         this.vy -= ay;
         this.others[i].vx += ax;
         this.others[i].vy += ay;
+        this.changeColor();
+        this.others[i].changeColor();
       }
     }
   }
@@ -180,6 +183,15 @@ class Ball {
     } else {
       img.fill(this.color);
       img.ellipse(this.x, this.y, this.diameter, this.diameter);
+    }
+  }
+
+  changeColor() {
+    console.log("changing color")
+    if (this.canChangeColor) {
+      this.color = pallete[Math.floor(Math.random() * 4) + 1];
+      this.canChangeColor = false;
+      setTimeout(() => { this.canChangeColor = true }, 100);
     }
   }
 
