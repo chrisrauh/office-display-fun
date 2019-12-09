@@ -8,6 +8,6 @@ We use [p5.js](https://p5js.org/), a library for creative coding with a focus on
 
 - Send me your github account so I can give you commit access.
 
-- For image and data loading to work as expected during development, you need to use a [local server](https://github.com/processing/p5.js/wiki/Local-server) - we encourage using the [Web Server for Chrome Extension](https://github.com/processing/p5.js/wiki/Local-server#web-server-for-chrome-extension) option for simplicity.
+- For image and data loading to work correctly during development, you need to use a [local server](https://github.com/processing/p5.js/wiki/Local-server) - we encourage using the [Web Server for Chrome Extension](https://github.com/processing/p5.js/wiki/Local-server#web-server-for-chrome-extension) option for simplicity.
 
 
