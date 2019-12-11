@@ -1,5 +1,5 @@
 
-let numBalls = 100;
+let numBalls = 24;
 let spring = 0.1;
 let gravity = 0.001;
 let friction = -.95;
