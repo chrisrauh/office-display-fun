@@ -1,11 +1,11 @@
 
-let numBalls = 10;
+let numBalls = 1000;
 let spring = 0.1;
-let gravity = 0.001;
+let gravity = 0.5;
 let friction = -.95;
 let balls = [];
 
-let borderSize = 50;
+let borderSize = 30;
 
 let pallete = [[45, 44, 45], [91, 84, 81], [164, 126, 111], [237, 206, 181], [217, 168, 123]];
 let palleteLoaded = false;
@@ -15,8 +15,12 @@ let pg0;
 let pg1;
 let img = [];
 
+const Y_AXIS = 1;
+const X_AXIS = 2;
+let b1, b2, c1, c2;
+
 function preload() {
-  for (let i = 0; i < 1; i++) {
+  for (let i = 0; i < 6; i++) {
     img[i] = loadImage(`img/face_${i}.png`);
     console.log(`img/face_${i}.png`);
   }
@@ -41,6 +45,12 @@ function setup() {
     model : "default"
   }
 
+  // Define colors
+  b1 = color(255);
+  b2 = color(0);
+  c1 = color(204, 102, 0);
+  c2 = color(0, 102, 153);
+
   setupAfterLoad();
 
   fetch(url, {
@@ -57,6 +67,7 @@ function setup() {
     .catch(error => console.error('Error:', error));
 
 }
+
 
 function setupAfterLoad() {
 
@@ -76,6 +87,8 @@ function setupAfterLoad() {
       img[0]
     );
   }
+  
+
 
 }
 
@@ -90,8 +103,13 @@ function draw() {
   //if (palleteLoaded) {
 
     //background(...pallete[0])
-    pg0.background(...pallete[0]);
-    pg1.background(...pallete[0]);
+    // pg0.background(...pallete[0]);
+    // pg1.background(...pallete[0]);
+
+    // Background
+    // setGradient(0, 0, width / 2, height, b1, b2, X_AXIS);
+    // setGradient(width / 2, 0, width / 2, height, b2, b1, X_AXIS);
+
 
     balls.forEach(ball => {
       ball.collide();
@@ -104,13 +122,47 @@ function draw() {
     image(pg0,0,0);
     image(pg1, 0, 0);
 
-    // fill(...pallete[4],80);
-    // textSize(60);
-    // textAlign(CENTER);
-    // text('Remember James loves you!', width/2, height/2);
+    // translate(240, 0, 0);
+    // push();
+    // rotateZ(frameCount * 0.01);
+    // rotateX(frameCount * 0.01);
+    // rotateY(frameCount * 0.01);
+    // box(70, 70, 70);
+    // pop();
+
+    fill([255, 255, 255], 100);
+    textSize(60);
+    textAlign(CENTER);
+    text('Trying to make James explode!', width/2, height/2);
   //}
 
 }
+
+
+
+function setGradient(x, y, w, h, c1, c2, axis) {
+  noFill();
+
+  if (axis === Y_AXIS) {
+    // Top to bottom gradient
+    for (let i = y; i <= y + h; i++) {
+      let inter = map(i, y, y + h, 0, 1);
+      let c = lerpColor(c1, c2, inter);
+      stroke(c);
+      line(x, i, x + w, i);
+    }
+  } else if (axis === X_AXIS) {
+    // Left to right gradient
+    for (let i = x; i <= x + w; i++) {
+      let inter = map(i, x, x + w, 0, 1);
+      let c = lerpColor(c1, c2, inter);
+      stroke(c);
+      line(i, y, i, y + h);
+    }
+  }
+}
+
+
 
 class Ball {
   constructor(xin, yin, din, idin, oin, color, picture) {
@@ -118,14 +170,14 @@ class Ball {
     this.y = yin;
     this.vx = random(4)-2;
     this.vy = 0;
-    this.diameter = din;
+    this.diameter = random(50);
     this.id = idin;
     this.others = oin;
     this.color = color;
     this.picture = picture;
-    this.vRotation = random(0.1) - 0.05;
+    this.vRotation = random(0.1) - 0.5;
     console.log(this.vRotation);
-    this.img = createGraphics(150, 150);
+    this.img = createGraphics(300, 300);
     this.showImg = random();
     this.canChangeColor = true;
   }
@@ -154,7 +206,7 @@ class Ball {
 
   move() {
     this.vy += gravity;
-    this.x += this.vx;
+    this.x += sin(this.vx);
     this.y += this.vy;
     if (this.x + this.diameter / 2 > width) {
       this.x = width - this.diameter / 2;
@@ -175,10 +227,10 @@ class Ball {
   display(img) {
     if (this.showImg < 0.01) {
       this.img.background(0, 0, 0, 0);
-      this.img.image(this.picture, 0, 0, 150, 150);
-      this.img.translate(Math.floor(150 / 2), Math.floor(150 / 2))
+      this.img.image(this.picture, 0, 0, 300, 300);
+      this.img.translate(Math.floor(300 / 2), Math.floor(300 / 2))
       this.img.rotate(this.vRotation);
-      this.img.translate(-Math.floor(150 / 2), -Math.floor(150 / 2))
+      this.img.translate(-Math.floor(300 / 2), -Math.floor(300 / 2))
       img.image(this.img, this.x, this.y);
     } else {
       img.fill(this.color);
