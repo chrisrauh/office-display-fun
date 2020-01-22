@@ -1,5 +1,5 @@
 
-let numBalls = 100;
+let numBalls = 10;
 let spring = 0.1;
 let gravity = 0.5;
 let friction = -.95;
@@ -14,6 +14,8 @@ let cnv;
 let pg0;
 let pg1;
 let img = [];
+
+let rotationVal = 0;
 
 const Y_AXIS = 1;
 const X_AXIS = 2;
@@ -80,7 +82,7 @@ function setupAfterLoad() {
     balls[i] = new Ball(
       random(width),
       random(height),
-      random(30) + 50,
+      random(30) ,
       i,
       balls,
       pallete[colorIndex],
@@ -100,6 +102,9 @@ const randoColor = () => pallete[Math.floor(Math.random() * (pallete.length - 1)
 
 function draw() {
 
+    translate (width / 2, height / 2);
+    rotate(rotationVal += 0.2);
+
   //if (palleteLoaded) {
 
     //background(...pallete[0])
@@ -117,6 +122,8 @@ function draw() {
       ball.display(pg0);
     });
 
+
+
     pg1.copy(pg0,0,Math.floor(height/2),width,Math.floor(height/2),0,0,Math.floor(width),Math.floor(height/2));
 
     image(pg0,0,0);
@@ -130,10 +137,11 @@ function draw() {
     // box(70, 70, 70);
     // pop();
 
-    fill([255, 255, 255], 100);
-    textSize(60);
-    textAlign(CENTER);
-    text('Trying to make James explode!', width/2, height/2);
+    // fill([255, 255, 255], 100);
+    // textSize(60);
+    // textAlign(CENTER);
+    // text('Trying to make James explode!', width/2, height/2);     
+
   //}
 
 }
