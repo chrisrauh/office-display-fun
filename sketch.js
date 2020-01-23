@@ -16,6 +16,8 @@ let pg1;
 let img = [];
 
 let rotationVal = 0;
+let rotationBaseSpeed = 0.01;
+let rotationSpeed = rotationBaseSpeed;
 
 const Y_AXIS = 1;
 const X_AXIS = 2;
@@ -89,7 +91,7 @@ function setupAfterLoad() {
       img[0]
     );
   }
-  
+
 
 
 }
@@ -102,8 +104,9 @@ const randoColor = () => pallete[Math.floor(Math.random() * (pallete.length - 1)
 
 function draw() {
 
-    translate (width / 2, height / 2);
-    rotate(rotationVal += 0.2);
+  translate (width / 2, height / 2);
+  rotate(rotationVal += rotationSpeed);
+  rotationSpeed = Math.sin(Date.now()/10000) * rotationBaseSpeed;
 
   //if (palleteLoaded) {
 
@@ -126,7 +129,7 @@ function draw() {
 
     pg1.copy(pg0,0,Math.floor(height/2),width,Math.floor(height/2),0,0,Math.floor(width),Math.floor(height/2));
 
-    image(pg0,0,0);
+    //image(pg0,0,0);
     image(pg1, 0, 0);
 
     // translate(240, 0, 0);
@@ -140,7 +143,7 @@ function draw() {
     // fill([255, 255, 255], 100);
     // textSize(60);
     // textAlign(CENTER);
-    // text('Trying to make James explode!', width/2, height/2);     
+    // text('Trying to make James explode!', width/2, height/2);
 
   //}
 
