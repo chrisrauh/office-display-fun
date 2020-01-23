@@ -1,7 +1,7 @@
 
 let numBalls = 50;
 let spring = 0.1;
-let gravity = 0.01; // 0.5
+let gravity = 0.5; // 0.5
 let friction = -.95;
 let balls = [];
 
@@ -40,7 +40,7 @@ function setup() {
   pg0.noStroke();
   // Sup
   // pg1 = createGraphics(width, height / 2);
-  pg1 = createGraphics(width / 1.8, 500);  
+  pg1 = createGraphics(width / 1.8, 1);  
   pg1.noStroke();
   pg1.translate(0, height/2);
   pg1.scale(1, -1);
@@ -181,7 +181,7 @@ class Ball {
     this.y = yin;
     this.vx = 1000;
     this.vy = 0;
-    this.diameter = 0.25;
+    this.diameter = 1;
     this.id = idin;
     this.others = oin;
     this.color = color;
