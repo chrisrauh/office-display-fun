@@ -14,6 +14,7 @@ let cnv;
 let pg0;
 let pg1;
 let img = [];
+let uberImg = [];
 
 let rotationVal = 0;
 let rotationBaseSpeed = (Math.PI / 180) * 1;
@@ -28,14 +29,19 @@ function preload() {
     img[i] = loadImage(`img/face_${i}.png`);
     console.log(`img/face_${i}.png`);
   }
+  for (let i = 0; i < 6; i++) {
+    uberImg[i] = loadImage(`img/uber_text_${i + 1}.png`);
+  }
 }
 
 function setup() {
 
-  var cnv = createCanvas(windowWidth - borderSize*2, windowHeight - borderSize*2);
+  var cnv = createCanvas(windowWidth - borderSize*2, windowHeight - borderSize*2, WEBGL);
   cnv.style('display', 'block');
   noStroke();
 
+  /*
+  COLOR MIND BACKGROUND COLORS
   pg0 = createGraphics(width, height);
   pg0.noStroke();
   // Sup
@@ -70,7 +76,7 @@ function setup() {
       setupAfterLoad();
     })
     .catch(error => console.error('Error:', error));
-
+  */
 }
 
 
@@ -102,7 +108,68 @@ function windowResized() {
 const randoColor = () => pallete[Math.floor(Math.random() * (pallete.length - 1)) + 1];
 
 function draw() {
+  /**
+  UBER UNIVERSE ANIMATION
+  */
+  background(50);
+  noStroke();
+  angleMode(DEGREES); 
 
+
+  directionalLight(255, 255, 255, 0, 0, -1  );
+  //pointLight(128, 128, 128, frameCount, 0, 600);
+  //ambientLight(128, 128, 128);
+
+  rotateY(frameCount / 10);
+
+  push();
+  rotateX(-20);
+  rotateY(180);
+  texture(uberImg[0]);
+  sphere(100);
+
+  pop();
+  push();
+  rotateX(-20);
+  rotateY(frameCount / 5);
+  translate(-150, -150, 0);
+  texture(uberImg[1]);
+  sphere(50);
+
+  pop();
+  push();
+  rotateX(-20);
+  rotateY(frameCount / 2);
+  translate(0, -200, 0);
+  texture(uberImg[2]);
+  sphere(50);
+
+  pop();
+  push();
+  rotateX(-20);
+  rotateY(-frameCount / 4);
+  translate(0, 200, 0);
+  texture(uberImg[3]);
+  sphere(50);
+
+  pop();
+  push();
+  rotateX(-20);
+  rotateY(frameCount / 2);
+  translate(0, 20, 250);
+  texture(uberImg[4]);
+  sphere(50);
+
+  pop();
+  push();
+  rotateX(-20);
+  rotateY(-frameCount/ 4);
+  translate(-100, 20, 120);
+  texture(uberImg[5]);
+  sphere(50);
+
+  /**
+  NEURALISM ANIMATION
   translate (width / 2, height / 2);
 
   rotate(rotationVal += rotationBaseSpeed);
@@ -128,7 +195,10 @@ function draw() {
 
     // pg1.copy(pg0, 0, Math.floor(height/2), width, Math.floor(height/2), 0, 0, Math.floor(width), Math.floor(100));
 
+  */
 
+  /*
+    FACE ANIMATION
     // image(pg0,0,0);
     image(pg1, 0, 0);
 
@@ -146,6 +216,7 @@ function draw() {
     // text('Trying to make James explode!', width/2, height/2);
 
   //}
+  */
 
 }
 
