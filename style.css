@@ -10,7 +10,7 @@ html, body {
 
 body {
   align-items: center;
-  border: 50px solid #F5F5F5;
+  border: 0px solid #F5F5F5;
   display: flex;
   margin: 0;
   justify-content: center;

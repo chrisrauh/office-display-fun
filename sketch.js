@@ -38,9 +38,8 @@ function setup() {
 
   pg0 = createGraphics(width, height);
   pg0.noStroke();
-  // Sup
-  // pg1 = createGraphics(width, height / 2);
-  pg1 = createGraphics(width / 1.8, 1);  
+
+  pg1 = createGraphics(width / 1.8, 1);
   pg1.noStroke();
   pg1.translate(0, height/2);
   pg1.scale(1, -1);
@@ -77,8 +76,6 @@ function setup() {
 function setupAfterLoad() {
 
   background(...pallete[0]);
-  // pg0.background(...pallete[0]);
-  // pg1.background(...pallete[0]);
 
   for (let i = 0; i < numBalls; i++) {
     colorIndex = i%(pallete.length-1)+1
@@ -108,72 +105,17 @@ function draw() {
   rotate(rotationVal += rotationBaseSpeed);
   rotationSpeed = Math.cos(Date.now()/20000) * rotationBaseSpeed;
 
-  //if (palleteLoaded) {
+  balls.forEach(ball => {
+    ball.collide();
+    ball.move();
+    ball.display(pg0);
+  });
 
-    //background(...pallete[0])
-    // pg0.background(...pallete[0]);
-    // pg1.background(...pallete[0]);
+  pg1.copy(pg0,0,Math.floor(height/2),width,Math.floor(height/2),0,0,Math.floor(width),Math.floor(height/2));
 
-    // Background
-    // setGradient(0, 0, width / 2, height, b1, b2, X_AXIS);
-    // setGradient(width / 2, 0, width / 2, height, b2, b1, X_AXIS);
-
-    balls.forEach(ball => {
-      ball.collide();
-      ball.move();
-      ball.display(pg0);
-    });
-
-    pg1.copy(pg0,0,Math.floor(height/2),width,Math.floor(height/2),0,0,Math.floor(width),Math.floor(height/2));
-
-    // pg1.copy(pg0, 0, Math.floor(height/2), width, Math.floor(height/2), 0, 0, Math.floor(width), Math.floor(100));
-
-
-    // image(pg0,0,0);
-    image(pg1, 0, 0);
-
-    // translate(240, 0, 0);
-    // push();
-    // rotateZ(frameCount * 0.01);
-    // rotateX(frameCount * 0.01);
-    // rotateY(frameCount * 0.01);
-    // box(70, 70, 70);
-    // pop();
-
-    // fill([255, 255, 255], 100);
-    // textSize(60);
-    // textAlign(CENTER);
-    // text('Trying to make James explode!', width/2, height/2);
-
-  //}
+  image(pg1, 0, 0);
 
 }
-
-
-
-function setGradient(x, y, w, h, c1, c2, axis) {
-  noFill();
-
-  if (axis === Y_AXIS) {
-    // Top to bottom gradient
-    for (let i = y; i <= y + h; i++) {
-      let inter = map(i, y, y + h, 0, 1);
-      let c = lerpColor(c1, c2, inter);
-      stroke(c);
-      line(x, i, x + w, i);
-    }
-  } else if (axis === X_AXIS) {
-    // Left to right gradient
-    for (let i = x; i <= x + w; i++) {
-      let inter = map(i, x, x + w, 0, 1);
-      let c = lerpColor(c1, c2, inter);
-      stroke(c);
-      line(i, y, i, y + h);
-    }
-  }
-}
-
-
 
 class Ball {
   constructor(xin, yin, din, idin, oin, color, picture) {
@@ -187,8 +129,6 @@ class Ball {
     this.color = color;
     this.alpha = 0;
     this.picture = picture;
-    // this.vRotation = random(0.1) - 0.5;
-    console.log(this.vRotation);
     this.img = createGraphics(300, 300);
     this.showImg = random();
     this.canChangeColor = true;
@@ -241,7 +181,6 @@ class Ball {
       this.img.background(0, 0, 0, 0);
       this.img.image(this.picture, 0, 0, 300, 300);
       this.img.translate(Math.floor(300 / 2), Math.floor(300 / 2))
-      this.img.rotate(this.vRotation);
       this.img.translate(-Math.floor(300 / 2), -Math.floor(300 / 2))
       img.image(this.img, this.x, this.y);
     } else {
@@ -259,13 +198,3 @@ class Ball {
   }
 
 }
-
-// function mousePressed() {
-
-//   // Set the value of fullscreen
-//   // into the variable
-//   let fs = fullscreen();
-
-//   // Call to fullscreen function
-//   fullscreen(!fs);
-// }
