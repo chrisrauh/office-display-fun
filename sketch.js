@@ -103,7 +103,6 @@ function draw() {
   translate (width / 2, height / 2);
 
   rotate(rotationVal += rotationBaseSpeed);
-  rotationSpeed = Math.cos(Date.now()/20000) * rotationBaseSpeed;
 
   balls.forEach(ball => {
     ball.collide();
@@ -111,7 +110,7 @@ function draw() {
     ball.display(pg0);
   });
 
-  pg1.copy(pg0,0,Math.floor(height/2),width,Math.floor(height/2),0,0,Math.floor(width),Math.floor(height/2));
+  pg1.copy(pg0, 0, Math.floor(height / 2), width, Math.floor(height / 2), 0, 0, Math.floor(width), Math.floor(height / 2));
 
   image(pg1, 0, 0);
 
