@@ -22,17 +22,21 @@ let rotationSpeed = rotationBaseSpeed;
 const Y_AXIS = 1;
 const X_AXIS = 2;
 let b1, b2, c1, c2;
+let uberImg = {};
 
 function preload() {
   for (let i = 0; i < 6; i++) {
     img[i] = loadImage(`img/face_${i}.png`);
     console.log(`img/face_${i}.png`);
   }
+  for (let i = 0; i < 6; i++) {
+    uberImg[i] = loadImage(`img/uber_text_${i + 1}.png`);
+  }
 }
 
 function setup() {
 
-  var cnv = createCanvas(windowWidth - borderSize*2, windowHeight - borderSize*2);
+  var cnv = createCanvas(windowWidth - borderSize*2, windowHeight - borderSize*2, WEBGL);
   cnv.style('display', 'block');
   noStroke();
 
@@ -99,20 +103,115 @@ function windowResized() {
 const randoColor = () => pallete[Math.floor(Math.random() * (pallete.length - 1)) + 1];
 
 function draw() {
+  /**
+  UBER UNIVERSE ANIMATION
+  */
+  background(50);
+  noStroke();
+  angleMode(DEGREES); 
 
+
+  directionalLight(255, 255, 255, 0, 0, -1  );
+  //pointLight(128, 128, 128, frameCount, 0, 600);
+  //ambientLight(128, 128, 128);
+
+  rotateY(frameCount / 10);
+
+  push();
+  rotateX(-20);
+  rotateY(180);
+  texture(uberImg[0]);
+  sphere(100);
+
+  pop();
+  push();
+  rotateX(-20);
+  rotateY(frameCount / 5);
+  translate(-150, -150, 0);
+  texture(uberImg[1]);
+  sphere(50);
+
+  pop();
+  push();
+  rotateX(-20);
+  rotateY(frameCount / 2);
+  translate(0, -200, 0);
+  texture(uberImg[2]);
+  sphere(50);
+
+  pop();
+  push();
+  rotateX(-20);
+  rotateY(-frameCount / 4);
+  translate(0, 200, 0);
+  texture(uberImg[3]);
+  sphere(50);
+
+  pop();
+  push();
+  rotateX(-20);
+  rotateY(frameCount / 2);
+  translate(0, 20, 250);
+  texture(uberImg[4]);
+  sphere(50);
+
+  pop();
+  push();
+  rotateX(-20);
+  rotateY(-frameCount/ 4);
+  translate(-100, 20, 120);
+  texture(uberImg[5]);
+  sphere(50);
+
+  /**
+  NEURALISM ANIMATION
   translate (width / 2, height / 2);
 
   rotate(rotationVal += rotationBaseSpeed);
+  rotationSpeed = Math.cos(Date.now()/20000) * rotationBaseSpeed;
 
-  balls.forEach(ball => {
-    ball.collide();
-    ball.move();
-    ball.display(pg0);
-  });
+  //if (palleteLoaded) {
 
-  pg1.copy(pg0, 0, Math.floor(height / 2), width, Math.floor(height / 2), 0, 0, Math.floor(width), Math.floor(height / 2));
+    //background(...pallete[0])
+    // pg0.background(...pallete[0]);
+    // pg1.background(...pallete[0]);
 
-  image(pg1, 0, 0);
+    // Background
+    // setGradient(0, 0, width / 2, height, b1, b2, X_AXIS);
+    // setGradient(width / 2, 0, width / 2, height, b2, b1, X_AXIS);
+
+    balls.forEach(ball => {
+      ball.collide();
+      ball.move();
+      ball.display(pg0);
+    });
+
+    pg1.copy(pg0,0,Math.floor(height/2),width,Math.floor(height/2),0,0,Math.floor(width),Math.floor(height/2));
+
+    // pg1.copy(pg0, 0, Math.floor(height/2), width, Math.floor(height/2), 0, 0, Math.floor(width), Math.floor(100));
+
+  */
+
+  /*
+    FACE ANIMATION
+    // image(pg0,0,0);
+    image(pg1, 0, 0);
+
+    // translate(240, 0, 0);
+    // push();
+    // rotateZ(frameCount * 0.01);
+    // rotateX(frameCount * 0.01);
+    // rotateY(frameCount * 0.01);
+    // box(70, 70, 70);
+    // pop();
+
+    // fill([255, 255, 255], 100);
+    // textSize(60);
+    // textAlign(CENTER);
+    // text('Trying to make James explode!', width/2, height/2);
+
+  //}
+  */
 
 }
 
