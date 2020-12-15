@@ -14,6 +14,7 @@ let cnv;
 let pg0;
 let pg1;
 let img = [];
+let uberImg = [];
 
 let rotationVal = 0;
 let rotationBaseSpeed = (Math.PI / 180) * 1;
@@ -40,6 +41,8 @@ function setup() {
   cnv.style('display', 'block');
   noStroke();
 
+  /*
+  COLOR MIND BACKGROUND COLORS
   pg0 = createGraphics(width, height);
   pg0.noStroke();
 
@@ -73,7 +76,7 @@ function setup() {
       setupAfterLoad();
     })
     .catch(error => console.error('Error:', error));
-
+  */
 }
 
 
